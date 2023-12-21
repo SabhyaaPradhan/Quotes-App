@@ -1,35 +1,41 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState } from "react"
 
-function App() {
-  const [count, setCount] = useState(0)
+const App = () => {
+  const quotes = [
+    'A rose by any other name would smell as sweet.',
+    'All that glitters is not gold',
+    'All the worlds a stage, and all the men and wmen merely players.'
+  ]
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+  const [points, setPoints] = useState({ 0: 1, 1: 3, 2: 4})
+  const [selected, setSelected] = useState(0)
+  const [quoteoftheday, setQuoteOfTheDay] =useState(0)
+
+  const Vote= () => {
+  const copy = {...points}
+  copy[selected] += 1
+  setPoints(copy)
+
+  if (copy[selected] > points[quoteoftheday]){
+    setQuoteOfTheDay(selected)
+  }
 }
 
+  const Next = () =>{
+    setSelected(preSelected => preSelected+1)
+  }
+
+  return (
+    <div>
+      <h1>Quote of the Day</h1>
+      <p>{quotes[quoteoftheday]}</p>
+      <p>has {points[selected]} votes</p>
+      <h1>Quotes</h1>
+      <p>{quotes[selected]}</p>
+      <p>has {points[selected]} votes</p>
+      <button onClick={Next} disabled={selected == 2}>Next</button>
+      <button onClick={Vote}>Vote</button>
+    </div>
+  )
+}
 export default App
